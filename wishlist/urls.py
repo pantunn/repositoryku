@@ -6,6 +6,8 @@ from wishlist.views import kembalikan_data #sesuaikan dengan nama fungsi yang di
 from wishlist.views import register #sesuaikan dengan nama fungsi yang dibuat
 from wishlist.views import login_user #sesuaikan dengan nama fungsi yang dibuat
 from wishlist.views import logout_user #sesuaikan dengan nama fungsi yang dibuat
+from wishlist.views import show_wishlist_ajax
+from wishlist.views import submit_ajax
 app_name = 'wishlist'
 
 urlpatterns = [
@@ -16,5 +18,7 @@ urlpatterns = [
     path('xml/<int:id>', kembalikan_data, name='kembalikan_data'),
     path('register/', register, name='register'),
     path('login/', login_user, name='login'),
-    path('logout/', logout_user, name='logout')
+    path('logout/', logout_user, name='logout'),
+    path('ajax/',show_wishlist_ajax, name='show_wishlist_ajax'),
+    path('ajax/submit',submit_ajax, name='submit_ajax'),
 ]

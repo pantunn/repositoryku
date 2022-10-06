@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+      <a class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <style>
+            ul {
+                list-style-type: none;
+                margin: 20;
+                padding: 0;
+                overflow: hidden;
+                background-color: rgb(225, 163, 163);
+                padding: 14px 16px;
+            }
+            li {
+              display: inline;
+            }
+
+            li a {
+            text-decoration: none;
+            }
+
+            </style>
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <span class="navbar-brand" href="#">Pantun</span>
+        
+            <a class="nav-link" href="{% url 'wishlist:logout' %}">logout</a>
+          </li>
+        </ul>
+    </div>
+</nav>
+
+<table>
+    <tr>
+    <th>Nama Barang</th>
+    <th>Harga Barang</th>
+    <th>Deskripsi</th>
+    </tr>
+    {% comment %} Tambahkan data di bawah baris ini {% endcomment %}
+    <script>
+        function yaa(event){
+            event.prevenDefault()
+            $.post("/ajax/submit/"),
+                {
+                    nama_barang : document.getElementById("nama_barang").value,
+                    harga_barang : document.getElementById("harga_barang").value,
+                    deskripsi: document.getElementById("deskripsi").value,
+                }
+            };
+            return false;
+        
+    </script>
+    <script type ="text/javascript">
+    
+        function refresh() {
+            $.ajax({
+                type: "GET",
+                url: "/wishlist/json",
+                dataType:"json",
+                success: function(data){
+                    datanya = data
+                }
+            });
+            return datanya;
+        }
+        function refresh2(){
+            var datanya = refresh();
+            var itemHtml = "<table> <tr> <th> Nama Barang</th>"
+            for (var i =0; i<datanya.length; i++){
+                var item = datanya[i].fields;
+                itemHtml += '<tr> <th>' + item.nama_barang+ '</th> <th>' + item.deskripsi + '</th> </tr>';
+            }
+            itemHtml += "</table>";
+            $('#lala').html(itemHtml);
+        }
+    </script>
+</table>
+<h5>Sesi terakhir login: {{ last_login }}</h5>
+
+{% endblock %}
